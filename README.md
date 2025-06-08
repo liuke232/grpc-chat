@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## 🚀 快速开始
 
-### 1. 生成 gRPC 代码（已完成）
+### 1. 生成 gRPC 代码
 
 ```bash
 python -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. chat.proto
