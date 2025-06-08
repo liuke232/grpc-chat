@@ -1,0 +1,108 @@
+// chat.proto
+syntax = "proto3";
+
+package chat;
+
+// 聊天服务定义
+service ChatService {
+    // 1. 获取房间列表 (一元RPC)
+    // 客户端发送一个空请求，服务端返回房间列表。
+    rpc ListRooms(ListRoomsRequest) returns (ListRoomsResponse);
+
+    // 2. 聊天 (双向流RPC)
+    // 客户端和服务器通过这个流进行持续通信。
+    // 客户端首先发送一个包含JoinRequest的ClientMessage来加入房间。
+    // 之后，客户端发送包含ChatMessage的ClientMessage来发送消息。
+    // 服务端则通过这个流发送各种事件和广播消息。
+    rpc Chat(stream ClientMessage) returns (stream ServerMessage);
+
+    // 新增：用户名唯一性校验
+    rpc CheckUsername(CheckUsernameRequest) returns (CheckUsernameResponse);
+}
+
+// === 房间列表 RPC 的消息 ===
+message ListRoomsRequest {}
+
+message RoomInfo {
+    string room_id = 1;
+    int32 participant_count = 2;
+}
+
+message ListRoomsResponse {
+    repeated RoomInfo rooms = 1;
+}
+
+
+// === 聊天双向流的消息 ===
+
+// 从客户端流向服务端的消息
+message ClientMessage {
+    oneof event {
+        JoinRequest join_request = 1;
+        ChatMessage chat_message = 2;
+        LeaveRequest leave_request = 3;
+    }
+}
+
+// 从服务端流向客户端的消息
+message ServerMessage {
+    oneof event {
+        // 其他用户发送的广播消息
+        BroadcastMessage broadcast = 1;
+        // 系统通知：某用户加入
+        UserJoinedNotification user_joined = 2;
+        // 系统通知：某用户离开
+        UserLeftNotification user_left = 3;
+        // 加入成功后的欢迎消息或错误信息
+        JoinResponse join_response = 4;
+    }
+}
+
+// --- ClientMessage 的子消息 ---
+message JoinRequest {
+    string user_name = 1;
+    string room_id = 2;
+}
+
+message ChatMessage {
+    // 用户名由服务器根据连接上下文得知，无需客户端重复发送
+    string text = 1;
+}
+
+// 新增：离开房间请求消息
+message LeaveRequest {
+    string user_name = 1;
+    string room_id = 2;
+}
+
+// --- ServerMessage 的子消息 ---
+message JoinResponse {
+    bool success = 1;
+    string message = 2; // e.g., "Welcome to the room!" or "Error: Room is full."
+}
+
+message BroadcastMessage {
+    string sender_name = 1;
+    string text = 2;
+    int64 timestamp = 3; // 使用 Unix 时间戳 (UTC)
+}
+
+message UserJoinedNotification {
+    string user_name = 1;
+    int32 current_count = 2;  // 当前房间人数
+}
+
+message UserLeftNotification {
+    string user_name = 1;
+    int32 current_count = 2;  // 当前房间人数
+}
+
+// 新增：用户名唯一性校验消息
+message CheckUsernameRequest {
+    string user_name = 1;
+}
+
+message CheckUsernameResponse {
+    bool available = 1;
+    string message = 2;
+}
