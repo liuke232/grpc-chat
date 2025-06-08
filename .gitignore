@@ -1,0 +1,19 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.conda
+
+# Local caches
+.vscode
+.idea
+
+# protobuf generated .py files
+*_pb2.py
+*_pb2_grpc.py

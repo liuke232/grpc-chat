@@ -1,0 +1,8 @@
+# gRPC 相关依赖
+grpcio==1.60.0
+grpcio-tools==1.60.0
+protobuf==4.25.1
+
+# GUI 相关依赖
+# tkinter 通常随 Python 一起安装，不需要单独安装
+# 如果遇到 tkinter 相关问题，请确保系统已正确安装 Python 和 tkinter 
