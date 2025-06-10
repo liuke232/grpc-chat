@@ -604,7 +604,6 @@ def main():
     )
     args = parser.parse_args()
     gui = ChatClientGUI(server_address=args.host, server_port=args.port)
-    gui.create_login_window()
     gui.run()
 
 
