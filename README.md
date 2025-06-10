@@ -71,21 +71,34 @@ python -m grpc_tools.protoc --proto_path=grpc_chat/proto --python_out=grpc_chat 
 
 基本用法：
 ```bash
-# 方式1: 使用启动脚本（推荐）
+# 方式1: 使用启动脚本
+# Linux/macOS
 ./scripts/start_server.sh
+
+# Windows
+scripts\start_server.bat
 
 # 方式2: 使用 uv run
 uv run python -m grpc_chat.start_server
 
 # 方式3: 激活虚拟环境后运行
+# Linux/macOS
 source .venv/bin/activate
+python -m grpc_chat.start_server
+
+# Windows
+.venv\Scripts\activate
 python -m grpc_chat.start_server
 ```
 
 高级用法（指定监听地址和端口）：
 ```bash
 # 使用启动脚本
+# Linux/macOS
 ./scripts/start_server.sh --host 0.0.0.0 --port 8080
+
+# Windows
+scripts\start_server.bat --host 0.0.0.0 --port 8080
 
 # 使用 uv run
 uv run python -m grpc_chat.start_server --host 0.0.0.0 --port 8080
@@ -99,21 +112,34 @@ uv run python -m grpc_chat.start_server --host 0.0.0.0 --port 8080
 
 基本用法：
 ```bash
-# 方式1: 使用启动脚本（推荐）
+# 方式1: 使用启动脚本
+# Linux/macOS
 ./scripts/start_client.sh
+
+# Windows
+scripts\start_client.bat
 
 # 方式2: 使用 uv run
 uv run python -m grpc_chat.start_client_gui
 
 # 方式3: 激活虚拟环境后运行
+# Linux/macOS
 source .venv/bin/activate
+python -m grpc_chat.start_client_gui
+
+# Windows
+.venv\Scripts\activate
 python -m grpc_chat.start_client_gui
 ```
 
 高级用法（指定服务器地址和端口）：
 ```bash
 # 使用启动脚本
+# Linux/macOS
 ./scripts/start_client.sh --host 192.168.1.100 --port 8080
+
+# Windows (批处理)
+scripts\start_client.bat --host 192.168.1.100 --port 8080
 
 # 使用 uv run
 uv run python -m grpc_chat.start_client_gui --host 192.168.1.100 --port 8080
@@ -154,8 +180,10 @@ grpc-chat/
 │   ├── start_server.py     # 服务器启动脚本
 │   └── start_client_gui.py # GUI客户端启动脚本
 ├── scripts/                # 便捷启动脚本
-│   ├── start_server.sh     # 服务器启动脚本
-│   └── start_client.sh     # 客户端启动脚本
+│   ├── start_server.sh     # 服务器启动脚本 (Linux/macOS)
+│   ├── start_client.sh     # 客户端启动脚本 (Linux/macOS)
+│   ├── start_server.bat    # 服务器启动脚本 (Windows 批处理)
+│   └── start_client.bat    # 客户端启动脚本 (Windows 批处理)
 ├── .gitignore              # Git 忽略文件
 ├── LICENSE                 # 许可证文件
 └── README.md              # 项目文档
@@ -327,29 +355,35 @@ uv run mypy grpc_chat/
    - **Windows**: 通常随Python一起安装，如缺失请重新安装Python
    - **服务器环境**: 如果只需要运行服务端，可以忽略此错误
 
-5. **连接失败**
+5. **Windows 启动脚本问题**
+   - **批处理脚本 (.bat)**: 双击运行或在命令提示符中执行
+   - **PowerShell 脚本 (.ps1)**: 可能需要设置执行策略：`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+   - **路径问题**: 确保在项目根目录运行脚本
+   - **编码问题**: 脚本已设置 UTF-8 编码，支持中文显示
+
+6. **连接失败**
    - 检查服务器是否已启动
    - 确认端口未被占用
    - 检查防火墙设置
    - 验证服务器地址和端口配置是否正确
 
-6. **用户名被占用**
+7. **用户名被占用**
    - 选择不同的用户名
    - 等待之前的连接超时
 
-7. **房间已满**
+8. **房间已满**
    - 选择其他房间
    - 等待有用户离开
 
-8. **消息发送失败**
+9. **消息发送失败**
    - 检查网络连接
    - 重新加入房间
 
-9. **GUI相关问题**
-   - 确保系统已安装 Python Tkinter
-   - 检查 Python 环境是否正确配置
+10. **GUI相关问题**
+    - 确保系统已安装 Python Tkinter
+    - 检查 Python 环境是否正确配置
 
-10. **网络连接问题**
+11. **网络连接问题**
     - 使用 `ping` 命令测试服务器可达性
     - 使用 `telnet` 或 `nc` 测试端口连通性
     - 检查服务器和客户端的网络配置是否匹配
