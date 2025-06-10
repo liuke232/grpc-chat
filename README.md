@@ -138,7 +138,7 @@ python -m grpc_chat.start_client_gui
 # Linux/macOS
 ./scripts/start_client.sh --host 192.168.1.100 --port 8080
 
-# Windows (批处理)
+# Windows
 scripts\start_client.bat --host 192.168.1.100 --port 8080
 
 # 使用 uv run
@@ -182,8 +182,8 @@ grpc-chat/
 ├── scripts/                # 便捷启动脚本
 │   ├── start_server.sh     # 服务器启动脚本 (Linux/macOS)
 │   ├── start_client.sh     # 客户端启动脚本 (Linux/macOS)
-│   ├── start_server.bat    # 服务器启动脚本 (Windows 批处理)
-│   └── start_client.bat    # 客户端启动脚本 (Windows 批处理)
+│   ├── start_server.bat    # 服务器启动脚本 (Windows)
+│   └── start_client.bat    # 客户端启动脚本 (Windows)
 ├── .gitignore              # Git 忽略文件
 ├── LICENSE                 # 许可证文件
 └── README.md              # 项目文档
@@ -357,7 +357,6 @@ uv run mypy grpc_chat/
 
 5. **Windows 启动脚本问题**
    - **批处理脚本 (.bat)**: 双击运行或在命令提示符中执行
-   - **PowerShell 脚本 (.ps1)**: 可能需要设置执行策略：`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
    - **路径问题**: 确保在项目根目录运行脚本
    - **编码问题**: 脚本已设置 UTF-8 编码，支持中文显示
 
