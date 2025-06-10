@@ -1,0 +1,107 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "grpc-chat"
+version = "0.1.0"
+description = "基于gRPC的分布式在线聊天系统"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "liuke", email = "liuke3090@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Chat",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8.1"
+dependencies = [
+    "grpcio>=1.60.0",
+    "grpcio-tools>=1.60.0",
+    "protobuf>=4.25.1",
+]
+
+[project.optional-dependencies]
+gui = [
+    # tkinter 通常随 Python 一起安装，不需要单独安装
+    # 如果遇到 tkinter 相关问题，请确保系统已正确安装 Python 和 tkinter
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.scripts]
+grpc-chat-server = "grpc_chat.server:main"
+grpc-chat-client = "grpc_chat.client:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/grpc-chat"
+Repository = "https://github.com/yourusername/grpc-chat"
+Issues = "https://github.com/yourusername/grpc-chat/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["grpc_chat"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["grpc_chat"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "grpcio.*",
+    "grpcio_tools.*",
+    "protobuf.*",
+]
+ignore_missing_imports = true 
