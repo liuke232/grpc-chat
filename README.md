@@ -201,9 +201,6 @@ make format
 # 代码检查
 make lint
 
-# 运行测试
-make test
-
 # 清理生成的文件
 make clean
 ```
@@ -234,13 +231,6 @@ uv run flake8 grpc_chat/
 
 # 使用 mypy 进行类型检查
 uv run mypy grpc_chat/
-```
-
-#### 运行测试
-
-```bash
-# 运行测试
-uv run pytest
 ```
 
 ## 📋 使用说明

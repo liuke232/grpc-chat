@@ -11,8 +11,6 @@ help:
 	@echo "  run-client     - 启动客户端"
 	@echo "  format         - 格式化代码"
 	@echo "  lint           - 代码检查"
-	@echo "  test           - 运行测试"
-	@echo "  test-server    - 测试服务端功能"
 	@echo "  clean          - 清理生成的文件"
 
 # 安装项目依赖
@@ -58,14 +56,6 @@ lint:
 	uv run flake8 grpc_chat/
 	uv run mypy grpc_chat/
 	@echo "代码检查完成"
-
-# 运行测试
-test:
-	uv run pytest
-
-# 测试服务端功能
-test-server:
-	python scripts/test_server.py
 
 # 清理生成的文件
 clean:
